@@ -27,12 +27,7 @@ Looking for a new home can feel overwhelming—endless scrolling, confusing info
 
 Here's a brief sketch of what the Home/Navigation page could look like. Ideas to the side are ideas for future development, assuming the pitch gets investors.
 
-```mermaid
-sequenceDiagram
-    actor You
-    actor Website
-    You->>Website: Replace this with your design
-```
+
 
 ### Key features
 
