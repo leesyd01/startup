@@ -1,40 +1,31 @@
-# Your startup name here
+# HomeQuest
 
-# I am editing this file for practice.
-
-[My Notes](notes.md)
-
-A brief description of the application here. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-
-
-> [!NOTE]
->  This is a template for your startup application. You must modify this `README.md` file for each phase of your development. You only need to fill in the section for each deliverable when that deliverable is submitted in Canvas. Without completing the section for a deliverable, the TA will not know what to look for when grading your submission. Feel free to add additional information to each deliverable description, but make sure you at least have the list of rubric items and a description of what you did for each item.
+This application serves as an example for the information you must provide in your Start Up README.md file for each phase of your development. You only need to fill in the section for the deliverable when you submit that deliverable in Canvas. This allows the TA to know what should be graded. The specification deliverable section defines what your application will do. The rest of the deliverable sections reference the rubric for the deliverable and tell where the functionality is in your application, or documents that you did not satisfy that part of the rubric.
 
 > [!NOTE]
 >  If you are not familiar with Markdown then you should review the [documentation](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax) before continuing.
 
 ## 🚀 Specification Deliverable
 
-> [!NOTE]
->  Fill in this sections as the submission artifact for this deliverable. You can refer to this [example](https://github.com/webprogramming260/startup-example/blob/main/README.md) for inspiration.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] Proper use of Markdown
-- [ ] A concise and compelling elevator pitch
-- [ ] Description of key features
-- [ ] Description of how you will use each technology
-- [ ] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
+- [x] Proper use of Markdown
+- [x] A concise and compelling elevator pitch
+- [x] Description of key features
+- [x] Description of how you will use each technology
+- [x] One or more rough sketches of your application. Images must be embedded in this file using Markdown image references.
 
 ### Elevator pitch
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Looking for a new home can feel overwhelming—endless scrolling, confusing information, and scattered details about safety and property management. HomeQuest simplifies the search by letting users enter a ZIP code and instantly see houses, condos, apartments, and rentals for sale or lease. Each listing not only displays pricing but also includes area crime rates and direct contact information for the landlord or management company. With real-time updates and a clean, searchable interface, HomeQuest gives people the clarity they need to make confident housing decisions without the hassle of juggling multiple sites.
 
 ### Design
 
-![Design image](placeholder.png)
+![Design image](HPwithIdeas.jpeg)
+![Design image](HP.jpeg)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+Here's a brief sketch of what the Home/Navigation page could look like. Ideas to the side are ideas for future development, assuming the pitch gets investors.
 
 ```mermaid
 sequenceDiagram
@@ -45,20 +36,28 @@ sequenceDiagram
 
 ### Key features
 
-- Describe your key feature
-- Describe your key feature
-- Describe your key feature
+- Secure login over HTTPS
+- Search properties by ZIP code
+- Display pricing, crime rate, and property management/landlord contact info
+- Real-time updates when new listings appear in the area (WebSocket)
+- Persistent storage of saved searches and favorite properties
+- Ability for users to save and revisit favorite listings
+- Ability for admins/landlords to add or update listings
 
 ### Technologies
 
 I am going to use the required technologies in the following ways.
 
-- **HTML** - Description here
-- **CSS** - Description here
-- **React** - Description here
-- **Service** - Description here
-- **DB/Login** - Description here
-- **WebSocket** - Description here
+- **HTML** - Correct structure for login, search page, and results page.
+- **CSS** - Responsive styling that works across screen sizes, with clear typography, spacing, and accessible contrast.
+- **React** - Components for search bar, property list, property detail, user authentication, and routing between pages.
+- **Service** - Backend points for:\
+    - login/register
+    - retrieving property listings
+    - retrieving area crime data (via external API call)
+    - saving favorites
+- **DB/Login** - Store users, saved properties, and listing details. Credentials securely hashed. Only authenticated users can save favorites or post listings.
+- **WebSocket** - Notify users in real time when new listings become available in their searched ZIP codes.
 
 ## 🚀 AWS deliverable
 
