@@ -27,8 +27,6 @@ Looking for a new home can feel overwhelming—endless scrolling, confusing info
 
 Here's a brief sketch of what the Home/Navigation page could look like. Ideas to the side are ideas for future development, assuming the pitch gets investors.
 
-
-
 ### Key features
 
 - Secure login over HTTPS
@@ -58,7 +56,10 @@ I am going to use the required technologies in the following ways.
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **Server deployed and accessible with custom domain name** - [My server link](https://yourdomainnamehere.click).
+- [x] **Server deployed and accessible with custom domain name** - [My server link](https://homequest.click).
+
+- [x] Secured an IPv4 address: 54.198.115.193
+- Command to startup server: ssh -i ~/Desktop/CS260/<key.pem> ubuntu@<IPv4 address>
 
 ## 🚀 HTML deliverable
 
