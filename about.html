@@ -1,4 +1,3 @@
-<!--About page-->
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,13 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>About</title>
     <link rel="icon" href="favicon.ico" />
+    <style>
+      #userDisplay {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-weight: bold;
+      }
+    </style>
   </head>
   <body>
     <header>
       <h1>HomeQuest<sup>&reg;</sup></h1>
 
+      <!-- User display goes here -->
+      <div id="userDisplay"></div>
+
       <nav>
-        <!-- Menu is a semantic alternative to <ul> that represents an interaction -->
         <menu>
           <li><a href="index.html">Login</a></li>
           <li><a href="homepage.html">Home Page</a></li>
@@ -25,17 +34,13 @@
     </header>
 
     <main>
-      <div id="picture" class="picture-box"><img width="400px" src="placeholder.jpg" alt="Housing" /></div>
+      <div id="picture" class="picture-box">
+        <img width="400px" src="placeholder.jpg" alt="Housing" />
+      </div>
 
-      <!--placeholder text-->
       <p>
         Here at HomeQuest you can select the housing that you need to be successful.
       </p>
-
-      <!-- <p>
-        The name Simon is a registered trademark of Milton-Bradley. Our use of the name and the game is for non-profit
-        educational use only. No part of this code or program should be used outside of that definition.
-      </p> -->
 
       <div id="quote">
         <div>Insert online reviews here</div>
@@ -49,5 +54,15 @@
       <br />
       <a href="https://github.com/leesyd01/startup.git">GitHub</a>
     </footer>
+
+    <script>
+      const user = localStorage.getItem("loggedInUser");
+      if (user) {
+        document.getElementById("userDisplay").textContent = `Welcome, ${user}`;
+      } else {
+        // if no user is logged in, send back to login
+        window.location.href = "index.html";
+      }
+    </script>
   </body>
 </html>
