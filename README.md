@@ -59,7 +59,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Server deployed and accessible with custom domain name** - [My server link](https://homequest.click).
 
 - [x] Secured an IPv4 address: 54.198.115.193
-- Command to startup server: ssh -i ~/Desktop/CS260/<key.pem> ubuntu@<IPv4 address>
+- Command to startup server: ssh -i ~/Desktop/CS260/<key.pem> ubuntu@homequest.click
 
 ## 🚀 HTML deliverable
 
