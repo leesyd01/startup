@@ -1,12 +1,83 @@
 <!--Page that shows locations that are saved or liked-->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Saved Items</title>
+    <link rel="icon" href="favicon.ico" />
+    <style>
+      #userDisplay {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-weight: bold;
+      }
+      ul#savedList {
+        list-style-type: none;
+        padding: 0;
+      }
+      ul#savedList li {
+        background: #f0f0f0;
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>HomeQuest<sup>&reg;</sup></h1>
+
+      <!-- User display -->
+      <div id="userDisplay"></div>
+
+      <nav>
+        <menu>
+          <li><a href="index.html">Login</a></li>
+          <li><a href="homepage.html">Home Page</a></li>
+          <li><a href="saved.html">Saved</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </menu>
+      </nav>
+
+      <hr />
+    </header>
+
+    <main>
+      <h2>Your Saved Items</h2>
+      <ul id="savedList"></ul>
+    </main>
+
+    <footer>
+      <hr />
+      <span class="text-reset">Author Name(s)</span>
+      <br />
+      <a href="https://github.com/leesyd01/startup.git">GitHub</a>
+    </footer>
+
+    <script>
+      // Display username
+      const user = localStorage.getItem("loggedInUser");
+      if (user) {
+        document.getElementById("userDisplay").textContent = `Welcome, ${user}`;
+      } else {
+        window.location.href = "index.html";
+      }
+
+      // Load saved items
+      const savedItems = JSON.parse(localStorage.getItem("savedItems")) || [];
+      const savedList = document.getElementById("savedList");
+
+      if (savedItems.length === 0) {
+        savedList.innerHTML = "<li>No items saved yet.</li>";
+      } else {
+        savedItems.forEach((item, index) => {
+          const li = document.createElement("li");
+          li.textContent = `${index + 1}. ${item}`;
+          savedList.appendChild(li);
+        });
+      }
+    </script>
+  </body>
 </html>

@@ -1,12 +1,66 @@
 <!--Homepage-->
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About</title>
+    <link rel="icon" href="favicon.ico" />
+    <style>
+      #userDisplay {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>HomeQuest<sup>&reg;</sup></h1>
+
+      <div id="topControls">
+        <input type="text" id="searchBar" placeholder="Search..." />
+        <span id="userDisplay"></span>
+      </div>
+
+      <!-- User display goes here -->
+      <div id="userDisplay"></div>
+
+      <nav>
+        <menu>
+          <li><a href="index.html">Login</a></li>
+          <li><a href="homepage.html">Home Page</a></li>
+          <li><a href="saved.html">Saved</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </menu>
+      </nav>
+
+      <hr />
+    </header>
+
+    <main>
+      <div id="picture" class="picture-box">
+        <img width="400px" src="placeholder.jpg" alt="Housing" />
+      </div>
+
+    </main>
+
+    <footer>
+      <hr />
+      <span class="text-reset">Author Name(s)</span>
+      <br />
+      <a href="https://github.com/leesyd01/startup.git">GitHub</a>
+    </footer>
+
+    <script>
+      const user = localStorage.getItem("loggedInUser");
+      if (user) {
+        document.getElementById("userDisplay").textContent = `Welcome, ${user}`;
+      } else {
+        // if no user is logged in, send back to login
+        window.location.href = "index.html";
+      }
+    </script>
+  </body>
 </html>
