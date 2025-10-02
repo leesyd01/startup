@@ -8,11 +8,11 @@
 - [Course instruction](https://github.com/webprogramming260)
 - [Canvas](https://byu.instructure.com)
 - [MDN](https://developer.mozilla.org)
+- [ColorValues repo]()
 
 ## AWS
 
-My IP address is: 54.81.96.130
-Launching my AMI I initially put it on a private subnet. Even though it had a public IP address and the security group was right, I wasn't able to connect to it.
+My IP address is: 
 
 ## Caddy
 
@@ -20,13 +20,12 @@ No problems worked just like it said in the [instruction](https://github.com/web
 
 ## HTML
 
-This was easy. I was careful to use the correct structural elements such as header, footer, main, nav, and form. The links between the three views work great using the `a` element.
-
-The part I didn't like was the duplication of the header and footer code. This is messy, but it will get cleaned up when I get to React.
 
 ## CSS
 
 [ ] Use ColorValues tool to update image on homepage.html to match the colors in photo to the color of the website
+[ ] Resize photos to fit border and make sure it looks nice
+[ ] Upload ColorValues project to GitHub and touch up. Make interface to help with usability
 
 ## React Part 1: Routing
 
