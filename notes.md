@@ -12,7 +12,7 @@
 
 ## AWS
 
-My IP address is: 
+My IP address is (with Elastic IPv4): 54.198.115.193
 
 ## Caddy
 
