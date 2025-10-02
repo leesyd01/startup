@@ -84,7 +84,7 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 - [x] **Responsive to window resizing** - I did complete this part of the deliverable.
 - [x] **Application elements** - I did complete this part of the deliverable.
 - [x] **Application text content** - I did complete this part of the deliverable.
-- [ ] **Application images** - I did complete this part of the deliverable.
+- [ ] **Application images** - I did complete this part of the deliverable
 
 ## 🚀 React part 1: Routing deliverable
 
