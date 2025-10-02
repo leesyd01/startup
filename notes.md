@@ -1,8 +1,7 @@
 # CS 260 Notes
 
-# I am editing this file for practice.
-
 [My startup - Simon](https://simon.cs260.click)
+[My startup - HomeQuest](https://startup.homequest.click)
 
 ## Helpful links
 
