@@ -27,6 +27,15 @@ No problems worked just like it said in the [instruction](https://github.com/web
 [ ] Resize photos to fit border and make sure it looks nice
 [ ] Upload ColorValues project to GitHub and touch up. Make interface to help with usability
 
+ /* additional colors (from ChatGPT):
+  /* 🎨 For a student-housing website aimed at college students, you’ll usually want something that feels fresh, friendly, and trustworthy. Some good choices:
+  Blue tones (#2a7ae2, #3b82f6) → clean, trustworthy, professional.
+  Green tones (#16a34a, #22c55e) → growth, affordability, eco-friendly vibes.
+  Orange/Coral accents (#f97316, #fb923c) → energetic, youthful, attention-grabbing.
+  Neutral grays (#374151, #6b7280) → modern and minimal, good as secondary colors.
+A good combo is to keep the nav bar a bold, saturated color (blue or green) and use accent colors (like orange or yellow) for hover states and buttons. */
+  
+
 ## React Part 1: Routing
 
 Setting up Vite and React was pretty simple. I had a bit of trouble because of conflicting CSS. This isn't as straight forward as you would find with Svelte or Vue, but I made it work in the end. If there was a ton of CSS it would be a real problem. It sure was nice to have the code structured in a more usable way.
