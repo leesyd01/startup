@@ -11,10 +11,10 @@ import { About } from './about/about';
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="body bg-dark text-dark min-vh-100 d-flex flex-column">
+      <div className="body bg-light text-dark min-vh-100 d-flex flex-column">
         {/* Header + Navbar */}
         <header className="container-fluid">
-          <nav className="navbar fixed-top navbar-dark bg-dark">
+          <nav className="navbar fixed-top navbar-dark bg-secondary">
             <div className="navbar-brand">
               HomeQuest<sup>&reg;</sup>
             </div>
@@ -47,7 +47,7 @@ export default function App() {
         </main>
 
         {/* Footer */}
-        <footer className="bg-dark text-white-50 mt-auto py-3">
+        <footer className="bg-secondary text-white-50 mt-auto py-3">
           <div className="container-fluid text-center">
             <span className="text-reset">Author Name(s)</span>
             <br />
