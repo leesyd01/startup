@@ -20,16 +20,16 @@ export default function App() {
             </div>
             <menu className="navbar-nav d-flex flex-row gap-3">
               <li className="nav-item">
-                <NavLink className="nav-link" to="/">Login</NavLink>
+                <NavLink className="nav-link" to="">Login</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/homepage">Home Page</NavLink>
+                <NavLink className="nav-link" to="homepage">Home Page</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/saved">Saved</NavLink>
+                <NavLink className="nav-link" to="saved">Saved</NavLink>
               </li>
               <li className="nav-item">
-                <NavLink className="nav-link" to="/about">About Us</NavLink>
+                <NavLink className="nav-link" to="about">About Us</NavLink>
               </li>
             </menu>
           </nav>
@@ -38,10 +38,11 @@ export default function App() {
         {/* Main Page Content */}
         <main className="flex-fill mt-5 pt-4 container">
           <Routes>
-            <Route path="/" element={<Login />} />
+            <Route path="/" element={<Login />} exact />
             <Route path="/homepage" element={<Homepage />} />
             <Route path="/saved" element={<Saved />} />
             <Route path="/about" element={<About />} />
+            <Route path='*' element={<NotFound />} />
           </Routes>
         </main>
 
@@ -63,4 +64,7 @@ export default function App() {
       </div>
     </BrowserRouter>
   );
+  function NotFound() {
+    return <main className="container-fluid bg-secondary text-center">404: Return to sender. Address unknown.</main>;
+  }
 }
