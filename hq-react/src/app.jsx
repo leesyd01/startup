@@ -9,19 +9,58 @@ import { Saved } from './saved/saved';
 import { About } from './about/about';
 
 export default function App() {
-  return <div className="body bg-dark text-light">App will display here</div>;
-  <><footer>
-        <hr />
-        <span className="text-reset">Author Name(s)</span>
-        <br />
-        <a href="https://github.com/leesyd01/startup.git">GitHub</a>
-    </footer><nav>
-            <menu>
-                <li><a href="index.html">Login</a></li>
-                <li><a href="homepage.html">Home Page</a></li>
-                <li><a href="saved.html">Saved</a></li>
-                <li><a href="about.html">About Us</a></li>
+  return (
+    <BrowserRouter>
+      <div className="body bg-dark text-light min-vh-100 d-flex flex-column">
+        {/* Header + Navbar */}
+        <header className="container-fluid">
+          <nav className="navbar fixed-top navbar-dark bg-dark">
+            <div className="navbar-brand">
+              HomeQuest<sup>&reg;</sup>
+            </div>
+            <menu className="navbar-nav d-flex flex-row gap-3">
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/">Login</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/homepage">Home Page</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/saved">Saved</NavLink>
+              </li>
+              <li className="nav-item">
+                <NavLink className="nav-link" to="/about">About Us</NavLink>
+              </li>
             </menu>
-        </nav></>
+          </nav>
+        </header>
 
+        {/* Main Page Content */}
+        <main className="flex-fill mt-5 pt-4 container">
+          <Routes>
+            <Route path="/" element={<Login />} />
+            <Route path="/homepage" element={<Homepage />} />
+            <Route path="/saved" element={<Saved />} />
+            <Route path="/about" element={<About />} />
+          </Routes>
+        </main>
+
+        {/* Footer */}
+        <footer className="bg-dark text-white-50 mt-auto py-3">
+          <div className="container-fluid text-center">
+            <span className="text-reset">Author Name(s)</span>
+            <br />
+            <a
+              className="text-reset"
+              href="https://github.com/leesyd01/startup.git"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
+            </a>
+          </div>
+        </footer>
+      </div>
+    </BrowserRouter>
+  );
 }
