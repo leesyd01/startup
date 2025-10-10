@@ -11,7 +11,7 @@ import { About } from './about/about';
 export default function App() {
   return (
     <BrowserRouter>
-      <div className="body bg-dark text-light min-vh-100 d-flex flex-column">
+      <div className="body bg-dark text-dark min-vh-100 d-flex flex-column">
         {/* Header + Navbar */}
         <header className="container-fluid">
           <nav className="navbar fixed-top navbar-dark bg-dark">

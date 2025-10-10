@@ -165,6 +165,9 @@
   footer a:hover {
     text-decoration: underline;
   }
+  .bg-secondary {
+    background-color: #f77f00 !important;
+  }
   
   /* Responsive tweaks */
   @media (max-width: 600px) {
