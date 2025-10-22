@@ -1,34 +1,31 @@
 import React from 'react';
-// import './app.css';
 
-export function Homepage() {
+export function Homepage({ userName }) {
+  const [listings] = React.useState([
+    { id: 1, title: 'Cozy Cottage', price: 250000 },
+    { id: 2, title: 'Downtown Loft', price: 420000 },
+    { id: 3, title: 'Suburban Home', price: 375000 },
+  ]);
+  const [saved, setSaved] = React.useState(() => JSON.parse(localStorage.getItem('savedHomes')) || []);
+
+  function saveHome(home) {
+    const updated = [...saved, home];
+    setSaved(updated);
+    localStorage.setItem('savedHomes', JSON.stringify(updated));
+  }
+
   return (
-    <main>
-      {/* <!-- Placeholder: 3rd Party Service API --> */}
-      <section id="apiData">
-        <h2>Featured Listings (from API)</h2>
-        <p>Loading listings from external housing API...</p>
-      </section>
-
-      {/* <!-- Placeholder: Housing API --> */}
-      <section id="housingResults">
-        <h2>Housing Results (from API)</h2>
-        <p>No results yet. Enter a ZIP code to see available housing.</p>
-      </section>
-
-      {/* <!-- Placeholder: Crime API --> */}
-      <section id="crimeResults">
-        <h2>Crime Rate (from API)</h2>
-        <p>No results yet. Enter a ZIP code to see local crime statistics.</p>
-      </section>
-
-      {/* <!-- Placeholder: WebSocket realtime data --> */}
-      <section id="liveUpdates">
-        <h2>WebSocket Data</h2>
-        <ul id="updates">
-          <li>Waiting for live updates...</li>
-        </ul>
-      </section>
-    </main>
+    <div>
+      <h2>Welcome {userName || 'Guest'}!</h2>
+      <h4>Available Listings</h4>
+      <div className="list-group">
+        {listings.map((home) => (
+          <div key={home.id} className="list-group-item d-flex justify-content-between align-items-center">
+            <div>{home.title} - ${home.price.toLocaleString()}</div>
+            <button className="btn btn-success btn-sm" onClick={() => saveHome(home)}>Save</button>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }

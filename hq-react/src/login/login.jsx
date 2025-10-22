@@ -1,22 +1,28 @@
 import React from 'react';
-// import './app.css';
 
-export function Login() {
+export function Login({ onLogin }) {
+  const [name, setName] = React.useState('');
+
+  function handleLogin(e) {
+    e.preventDefault();
+    localStorage.setItem('userName', name);
+    onLogin(name);
+  }
+
   return (
-    <main>
-      <h1>Welcome to HomeQuest</h1>
-      <form onsubmit="return false">
-        <div>
-          <span>Username or Email</span>
-          <input type="text" id="username" placeholder="type here" />
-        </div>
-        <div>
-          <span>Password</span>
-          <input type="password" id="password" placeholder="type here" />
-        </div>
-        <button type="button" onclick="loginUser()">Login</button>
-        <button type="submit">Create</button>
+    <div className="text-center">
+      <h2>Welcome to HomeQuest</h2>
+      <form onSubmit={handleLogin} className="d-flex flex-column align-items-center">
+        <input
+          className="form-control w-50 my-2"
+          type="text"
+          placeholder="Enter your name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
+        <button className="btn btn-primary">Login</button>
       </form>
-    </main>
+    </div>
   );
 }
