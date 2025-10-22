@@ -1,28 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export function Homepage({ userName }) {
-  const [listings] = React.useState([
-    { id: 1, title: 'Cozy Cottage', price: 250000 },
-    { id: 2, title: 'Downtown Loft', price: 420000 },
-    { id: 3, title: 'Suburban Home', price: 375000 },
+export function Homepage() {
+  const navigate = useNavigate();
+  const user = localStorage.getItem('user'); // check login
+  const [homes, setHomes] = useState([
+    { id: 1, name: 'Cozy Cottage', price: 250000, saved: false },
+    { id: 2, name: 'Downtown Apartment', price: 400000, saved: false },
+    { id: 3, name: 'Suburban Home', price: 320000, saved: false },
   ]);
-  const [saved, setSaved] = React.useState(() => JSON.parse(localStorage.getItem('savedHomes')) || []);
 
-  function saveHome(home) {
-    const updated = [...saved, home];
-    setSaved(updated);
-    localStorage.setItem('savedHomes', JSON.stringify(updated));
-  }
+  const handleSave = (id) => {
+    if (!user) {
+      alert('You must be logged in to save homes.');
+      navigate('/'); // redirect to login if not logged in
+      return;
+    }
+
+    const updatedHomes = homes.map((home) =>
+      home.id === id ? { ...home, saved: !home.saved } : home
+    );
+    setHomes(updatedHomes);
+
+    localStorage.setItem('savedHomes', JSON.stringify(updatedHomes.filter(h => h.saved)));
+  };
 
   return (
-    <div>
-      <h2>Welcome {userName || 'Guest'}!</h2>
-      <h4>Available Listings</h4>
-      <div className="list-group">
-        {listings.map((home) => (
-          <div key={home.id} className="list-group-item d-flex justify-content-between align-items-center">
-            <div>{home.title} - ${home.price.toLocaleString()}</div>
-            <button className="btn btn-success btn-sm" onClick={() => saveHome(home)}>Save</button>
+    <div className="container mt-5">
+      <h1>Browse Homes on HomeQuest</h1>
+      <p>{user ? `Welcome back, ${user}!` : 'Browse freely — log in to save your favorites.'}</p>
+
+      <div className="row">
+        {homes.map((home) => (
+          <div key={home.id} className="col-md-4 mb-3">
+            <div className="card p-3 shadow-sm">
+              <h5>{home.name}</h5>
+              <p>Price: ${home.price.toLocaleString()}</p>
+              <button
+                className={`btn ${home.saved ? 'btn-success' : 'btn-outline-secondary'}`}
+                onClick={() => handleSave(home.id)}
+              >
+                {home.saved ? 'Saved' : 'Save Home'}
+              </button>
+            </div>
           </div>
         ))}
       </div>
