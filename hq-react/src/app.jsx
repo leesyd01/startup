@@ -21,6 +21,7 @@ export default function App() {
               <li className="nav-item"><NavLink className="nav-link" to="homepage">Home Page</NavLink></li>
               <li className="nav-item"><NavLink className="nav-link" to="saved">Saved</NavLink></li>
               <li className="nav-item"><NavLink className="nav-link" to="about">About Us</NavLink></li>
+              <li className="nav-item"><NavLink className="nav-link" to="/" onClick={() => { localStorage.removeItem('user'); }}>Logout</NavLink></li>
             </menu>
           </nav>
         </header>
