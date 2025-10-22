@@ -98,8 +98,8 @@ For this deliverable I did the following. I checked the box `[x]` and added a de
 
 For this deliverable I did the following. I checked the box `[x]` and added a description for things I completed.
 
-- [ ] **All functionality implemented or mocked out** - I did not complete this part of the deliverable.
-- [ ] **Hooks** - I did not complete this part of the deliverable.
+- [x] **All functionality implemented or mocked out** - I implemented placeholders for incoming housing options from future API calls
+- [x] **Hooks** - I did complete this part of the deliverable and added hooks for button functionality including log in, log out, and save.
 
 ## 🚀 Service deliverable
 
