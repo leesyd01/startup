@@ -37,7 +37,7 @@ export default function App() {
 
         <footer className="bg-secondary text-white-50 mt-auto py-3">
           <div className="container-fluid text-center">
-            <span>Author Name(s)</span><br/>
+            <span>Sydney Lee</span><br/>
             <a className="text-reset" href="https://github.com/leesyd01/startup.git" target="_blank" rel="noreferrer">GitHub</a>
           </div>
         </footer>
