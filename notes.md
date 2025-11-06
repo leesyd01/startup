@@ -66,6 +66,15 @@ Handling the toggling of the checkboxes was particularly interesting.
 </div>
 ```
 
+## Services
+
+Useful API's not implemented yet until database is implemented. Here are links to the API's to be used:
+Zillow listings: (https://hasdata.com/apis/zillow-api?utm_source=google&utm_medium=cpc&utm_campaign=23045037726&utm_term=zillow%20api&utm_content=775748274124&gad_source=1&gad_campaignid=23045037726&gbraid=0AAAABBWhTr-9Xkiq6RCWgZyn3nuUrjjIU&gclid=Cj0KCQiAq7HIBhDoARIsAOATDxAOwhrRjtmivj8dxEuOgZUnK0px8GNSg6bwGHcIjxrwxFWyjLGOEdQaAiyxEALw_wcB)
+Zillow reviews: (https://www.zillowgroup.com/developers/api/agents/agent-reviews/)
+Crime: (https://rapidapi.com/collection/crime)
+
+
+
 
 MIDTERM REVIEW QUESTIONS
 This exam covers all instructions given to this point in the course.  You may use any notes that you have added to your Start Up repository notes.md.
