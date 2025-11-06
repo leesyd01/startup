@@ -1,14 +1,70 @@
+// backend service. run using node index.js
+
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 
+const app = express();
+
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
-app.use(express.static('public'));
 
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.static('public'));
+
+const users = {};
+
+// authentication endpoints
+
+// user registration
+app.post('/api/register', async (req, res) => {
+    const { email, password } = req.body;
+    
+    if (!email || !password) {
+        return res.status(400).json({ msg: 'Email and password required' });
+    }
+    if (users[email]) {
+        return res.status(409).json({ msg: 'User already exists' });
+    }
+    const passwordHash = await bcrypt.hash(password, 10);
+    users[email] = { passwordHash };
+    res.status(200).json({ msg: 'Registered successfully' });
+});
+
+// user login
+app.post('/api/login', async (req, res) => {
+    const { email, password } = req.body;
+    const user = users[email];
+
+    if (!user) {
+        return res.status(404).json({ msg: 'User not found' });
+    }
+
+    // password verification
+    const isValid = await bcrypt.compare(password, user.passwordHash);
+    if (!isValid) {
+        return res.status(401).json({ msg: 'Invalid password' });
+    }
+
+    // token generation and set cookie
+    const token = uuidv4();
+    user.token = token;
+    res.cookie('token', token, { httpOnly: true });
+    res.json({ msg: 'Login successful' });
+});
+
+// user logout
+app.post('/api/logout', (req, res) => {
+    const token = req.cookies.token;
+    for (const email in users) {
+        if (users[email].token === token) {
+            delete users[email].token;
+        }
+    }
+    res.clearCookie('token');
+    res.json({ msg: 'Logged out' });
+});
 
 app.listen(port, () => {
     console.log(`HomeQuest service running on port ${port}`);
