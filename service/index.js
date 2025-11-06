@@ -11,7 +11,6 @@ const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(express.json());
 app.use(cookieParser());
-app.use(express.static('public'));
 
 const users = {};
 
@@ -67,7 +66,7 @@ app.post('/api/logout', (req, res) => {
 });
 
 // endpoint: property listings
-app.get('/app/listings', (req, res) => {
+app.get('/api/listings', (req, res) => {
     const listings = [
         { id: 1, title: 'Cozy Cottage', price: 150000 },
         { id: 2, title: 'Modern Apartment', price: 250000 },
@@ -77,18 +76,45 @@ app.get('/app/listings', (req, res) => {
 });
 
 // endpoint: user favorites (login required)
-app.get('/api/favorites', (req, res) => {
+for (const email in users) {
+    if (!users[email].favorites) users[email].favorites = [];
+  }
+  
+  // get favorites (must be logged in)
+  app.get('/api/favorites', (req, res) => {
     const token = req.cookies.token;
-    const user = Object.entries(users).find(([__dirname, u]) => u.token === token);
-    if (!user) return res.status(401).json({ msg: 'Unauthorized' });
-
-    const favorites = [
-        { id: 2, title: 'Modern Apartment', price: 250000 },
-    ];
-    res.json(favorites);
-});
-
-
+    const userEntry = Object.entries(users).find(([email, u]) => u.token === token);
+    if (!userEntry) return res.status(401).json({ msg: 'Unauthorized' });
+  
+    const [email, user] = userEntry;
+    res.json(user.favorites || []);
+  });
+  
+  // add/remove favorite
+  app.post('/api/favorites', (req, res) => {
+    const token = req.cookies.token;
+    const userEntry = Object.entries(users).find(([email, u]) => u.token === token);
+    if (!userEntry) return res.status(401).json({ msg: 'Unauthorized' });
+  
+    const [email, user] = userEntry;
+    const home = req.body;
+  
+    if (!home || !home.id) {
+      return res.status(400).json({ msg: 'Invalid home data' });
+    }
+  
+    const exists = user.favorites?.find(h => h.id === home.id);
+    if (exists) {
+      user.favorites = user.favorites.filter(h => h.id !== home.id);
+    } else {
+      user.favorites = [...(user.favorites || []), home];
+    }
+  
+    res.json(user.favorites);
+  });
+  
+  app.use(express.static('public'));
+  
 // start server
 app.listen(port, () => {
     console.log(`HomeQuest service running on port ${port}`);
