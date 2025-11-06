@@ -4,11 +4,35 @@ import { useNavigate } from 'react-router-dom';
 export function Homepage() {
   const navigate = useNavigate();
   const user = localStorage.getItem('user'); // check login
-  const [homes, setHomes] = useState([
-    { id: 1, name: 'Cozy Cottage', price: 250000, saved: false },
-    { id: 2, name: 'Downtown Apartment', price: 400000, saved: false },
-    { id: 3, name: 'Suburban Home', price: 320000, saved: false },
-  ]);
+  const [homes, setHomes] = useState([]);
+  const [quote, setQuote] = useState('');
+  
+  useEffect(() => {
+    async function loadListings() {
+      try {
+        const res = await fetch('/api/listings');
+        if (res.ok) {
+          const data = await res.json();
+          setHomes(data);
+        } else {
+          console.error('Failed to fetch listings');
+        }
+      } catch (err) {
+        console.error('Error fetching listings:', err);
+      }
+    }
+    async function loadQuote() {
+      try {
+        const res = await fetch('https://api.quotable.io/random');
+        const data = await res.json();
+        setQuote(`"${data.content}" - ${data.author}`);
+      } catch (err) {
+        console.error('Error fetching quote:', err);
+      }
+    }
+    loadListings();
+    loadQuote();
+  }, []);
 
   const handleSave = (id) => {
     if (!user) {
