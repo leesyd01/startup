@@ -1,4 +1,4 @@
-// backend service. run using node index.js
+// backend service. path is startup/service/index.js - run using node index.js
 
 import express from 'express';
 import cookieParser from 'cookie-parser';
@@ -66,6 +66,30 @@ app.post('/api/logout', (req, res) => {
     res.json({ msg: 'Logged out' });
 });
 
+// endpoint: property listings
+app.get('/app/listings', (req, res) => {
+    const listings = [
+        { id: 1, title: 'Cozy Cottage', price: 150000 },
+        { id: 2, title: 'Modern Apartment', price: 250000 },
+        { id: 3, title: 'Beachfront Villa', price: 900000 },
+    ];
+    res.json(listings);
+});
+
+// endpoint: user favorites (login required)
+app.get('/api/favorites', (req, res) => {
+    const token = req.cookies.token;
+    const user = Object.entries(users).find(([__dirname, u]) => u.token === token);
+    if (!user) return res.status(401).json({ msg: 'Unauthorized' });
+
+    const favorites = [
+        { id: 2, title: 'Modern Apartment', price: 250000 },
+    ];
+    res.json(favorites);
+});
+
+
+// start server
 app.listen(port, () => {
     console.log(`HomeQuest service running on port ${port}`);
 });
