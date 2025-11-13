@@ -6,6 +6,12 @@ import { Login } from './login/login';
 import { Homepage } from './homepage/homepage';
 import { Saved } from './saved/saved';
 import { About } from './about/about';
+import { Navigate } from 'react-router-dom';
+
+function ProtectedRoute({ children }) {
+  const user = localStorage.getItem('user');
+  return user ? children : <Navigate to="/" replace />;
+}
 
 export default function App() {
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
@@ -21,12 +27,50 @@ export default function App() {
               <li className="nav-item"><NavLink className="nav-link" to="homepage">Home Page</NavLink></li>
               <li className="nav-item"><NavLink className="nav-link" to="saved">Saved</NavLink></li>
               <li className="nav-item"><NavLink className="nav-link" to="about">About Us</NavLink></li>
-              <li className="nav-item"><NavLink className="nav-link" to="/" onClick={() => { localStorage.removeItem('userName'); setUserName(''); fetch('/api/logout', { method: 'POST', credentials: 'include', })}}>Logout</NavLink></li>
+              <li className="nav-item"><NavLink className="nav-link" to="/" onClick={async () => { await fetch('/api/logout', { method: 'POST', credentials: 'include' }); localStorage.removeItem('user'); setUserName(''); window.location.reload(); }}>Logout</NavLink></li>
             </menu>
           </nav>
         </header>
 
         <main className="flex-fill mt-5 pt-4 container">
+  <Routes>
+    {/* Public route */}
+    <Route path="/" element={<Login onLogin={setUserName} />} />
+
+    {/* Protected routes */}
+    <Route
+      path="/homepage"
+      element={
+        <ProtectedRoute>
+          <Homepage userName={userName} />
+        </ProtectedRoute>
+      }
+    />
+
+    <Route
+      path="/saved"
+      element={
+        <ProtectedRoute>
+          <Saved />
+        </ProtectedRoute>
+      }
+    />
+
+    <Route
+      path="/about"
+      element={
+        <ProtectedRoute>
+          <About />
+        </ProtectedRoute>
+      }
+    />
+
+    {/* Catch-all route */}
+    <Route path="*" element={<NotFound />} />
+  </Routes>
+</main>
+
+        {/* <main className="flex-fill mt-5 pt-4 container">
           <Routes>
             <Route path="/" element={<Login onLogin={setUserName} />} exact />
             <Route path="/homepage" element={<Homepage userName={userName} />} />
@@ -34,7 +78,7 @@ export default function App() {
             <Route path="/about" element={<About />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-        </main>
+        </main> */}
 
         <footer className="bg-secondary text-white-50 mt-auto py-3">
           <div className="container-fluid text-center">

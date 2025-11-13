@@ -9,35 +9,52 @@ export function Login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    if (email.trim() === '' || password.trim() === '') {
-      setError('Please enter a valid email and password');
-      return;
-    }
-
-    try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {'Content-Type': 'application/json' },
-        credentials: 'include', // ensure cookies are working
-        body: JSON.stringify({ email, password }),
-      });
-
+  
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+  
+    if (response.ok) {
       const data = await response.json();
-
-      if (!response.ok) {
-        setError(data.msg || 'Login failed');
-        return;
-      }
-
-      // if login success
-      localStorage.setItem('userName', email);
+      localStorage.setItem('user', data.email);
       navigate('/homepage');
-    } catch (err) {
-      console.error('Login error:', err);
-      setError('An unexpected error occurred');
+    } else {
+      setError('Invalid email or password');
     }
   };
+  // const handleLogin = async (e) => {
+  //   e.preventDefault();
+
+  //   if (email.trim() === '' || password.trim() === '') {
+  //     setError('Please enter a valid email and password');
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await fetch('/api/login', {
+  //       method: 'POST',
+  //       headers: {'Content-Type': 'application/json' },
+  //       credentials: 'include', // ensure cookies are working
+  //       body: JSON.stringify({ email, password }),
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (!response.ok) {
+  //       setError(data.msg || 'Login failed');
+  //       return;
+  //     }
+
+  //     // if login success
+  //     localStorage.setItem('userName', email);
+  //     navigate('/homepage');
+  //   } catch (err) {
+  //     console.error('Login error:', err);
+  //     setError('An unexpected error occurred');
+  //   }
+  // };
 
   return (
     <div className="container text-center mt-5">

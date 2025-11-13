@@ -19,6 +19,14 @@ app.use(cookieParser());
 
 const users = {};
 
+// // DEV: seed a test user (email: test@example.com, password: password123)
+// import bcrypt from 'bcryptjs';
+// (async () => {
+//   const pw = await bcrypt.hash('password123', 10);
+//   users['test@example.com'] = { passwordHash: pw, favorites: [] };
+// })();
+
+
 // authentication endpoints
 
 // user registration
