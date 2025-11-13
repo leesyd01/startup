@@ -1,5 +1,6 @@
 // backend service. path is startup/service/index.js - run using node index.js
 
+import cors from 'cors';
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import bcrypt from 'bcryptjs';
@@ -9,6 +10,10 @@ const app = express();
 
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
+app.use(cors({
+    origin: ['http://localhost5173', 'https://homequest.click'],
+    credentials: true,
+}));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -112,6 +117,16 @@ for (const email in users) {
   
     res.json(user.favorites);
   });
+
+  // login status check endpoint
+  app.get('/api/status', (req, res) => {
+    const token = req.cookies.token;
+    const userEntry = Object.entries(users).find(([_, u]) => u.token === token);
+    if (!userEntry) return res.json({ loggedIn: false });
+    const [email] = userEntry;
+    res.json({ loggedIn: true, email });
+  });
+  
   
   app.use(express.static('public'));
   
