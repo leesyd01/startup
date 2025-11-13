@@ -7,7 +7,7 @@ export function Login() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     if (email.trim() === '' || password.trim() === '') {
