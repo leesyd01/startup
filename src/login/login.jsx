@@ -47,7 +47,7 @@ export function Login() {
           type="text"
           className="form-control w-50"
           placeholder="Email"
-          value={username}
+          value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
