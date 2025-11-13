@@ -3,18 +3,39 @@ import { useNavigate } from 'react-router-dom';
 
 export function Login() {
   const navigate = useNavigate();
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const handleLogin = (e) => {
     e.preventDefault();
 
-    if (username.trim() !== '' && password.trim() !== '') {
-      localStorage.setItem('user', username);
+    if (email.trim() === '' || password.trim() === '') {
+      setError('Please enter a valid email and password');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json' },
+        credentials: 'include', // ensure cookies are working
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        setError(data.msg || 'Login failed');
+        return;
+      }
+
+      // if login success
+      localStorage.setItem('userName', email);
       navigate('/homepage');
-    } else {
-      setError('Please enter a valid username and password');
+    } catch (err) {
+      console.error('Login error:', err);
+      setError('An unexpected error occurred');
     }
   };
 
@@ -25,9 +46,9 @@ export function Login() {
         <input
           type="text"
           className="form-control w-50"
-          placeholder="Username"
+          placeholder="Email"
           value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <input

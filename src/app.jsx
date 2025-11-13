@@ -17,11 +17,11 @@ export default function App() {
           <nav className="navbar fixed-top navbar-dark bg-secondary">
             <div className="navbar-brand">HomeQuest<sup>&reg;</sup></div>
             <menu className="navbar-nav d-flex flex-row gap-3">
-              <li className="nav-item"><NavLink className="nav-link" to="">Login</NavLink></li>
+              <li className="nav-item"><NavLink className="nav-link" to="/">Login</NavLink></li>
               <li className="nav-item"><NavLink className="nav-link" to="homepage">Home Page</NavLink></li>
               <li className="nav-item"><NavLink className="nav-link" to="saved">Saved</NavLink></li>
               <li className="nav-item"><NavLink className="nav-link" to="about">About Us</NavLink></li>
-              <li className="nav-item"><NavLink className="nav-link" to="/" onClick={() => { localStorage.removeItem('userName'); setUserName(''); fetch('/api/logout', { method: 'post' })}}>Logout</NavLink></li>
+              <li className="nav-item"><NavLink className="nav-link" to="/" onClick={() => { localStorage.removeItem('userName'); setUserName(''); fetch('/api/logout', { method: 'POST', credentials: 'include', })}}>Logout</NavLink></li>
             </menu>
           </nav>
         </header>
