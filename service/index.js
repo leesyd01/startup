@@ -140,7 +140,7 @@ for (const email in users) {
   });
   
   
-  // app.use(express.static('public'));
+  app.use(express.static('public'));
 
 // start server
 app.listen(port, () => {
