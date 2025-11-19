@@ -12,7 +12,7 @@ export function Register() {
     const handleRegister = async (e) => {
         e.preventDefault();
 
-        const response = await fetch("BACKEND API DOMAIN", {
+        const response = await fetch("/api/register", { 
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

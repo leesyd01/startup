@@ -7,6 +7,7 @@ import { Homepage } from './homepage/homepage';
 import { Saved } from './saved/saved';
 import { About } from './about/about';
 import { Navigate } from 'react-router-dom';
+import { Register } from './register/register';
 
 function ProtectedRoute({ children }) {
   const user = localStorage.getItem('user');
