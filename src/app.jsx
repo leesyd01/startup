@@ -34,8 +34,9 @@ export default function App() {
 
         <main className="flex-fill mt-5 pt-4 container">
   <Routes>
-    {/* Public route */}
+    {/* Public routes */}
     <Route path="/" element={<Login onLogin={setUserName} />} />
+    <Route path="/register" element={<Register />} />
 
     {/* Protected routes */}
     <Route
@@ -66,8 +67,9 @@ export default function App() {
     />
 
     {/* Catch-all route */}
-    <Route path="*" element={<NotFound />} />
+    <Route path="*" element={<NotFound />} />  
   </Routes>
+
 </main>
 
         {/* <main className="flex-fill mt-5 pt-4 container">
