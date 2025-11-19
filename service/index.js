@@ -39,9 +39,13 @@ app.post('/api/register', async (req, res) => {
     if (users[email]) {
         return res.status(409).json({ msg: 'User already exists' });
     }
-    const passwordHash = await bcrypt.hash(password, 10);
-    users[email] = { passwordHash };
-    res.status(200).json({ msg: 'Registered successfully' });
+    const hashed = await bcrypt.hash(password, 10);
+    users[email] = {
+      email,
+      passwordHash: hashed,
+      favorites: [],
+    };
+    res.status(201).send("User created");
 });
 
 // user login
