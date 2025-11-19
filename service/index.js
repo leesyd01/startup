@@ -5,6 +5,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
+import path from "path";
+import { fileURLToPath } from 'url';
 
 const app = express();
 
@@ -138,10 +140,17 @@ for (const email in users) {
     const [email] = userEntry;
     res.json({ loggedIn: true, email });
   });
-  
-  
-  app.use(express.static('public'));
 
+  // fallback
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+
+  app.use(express.static(path.join(__dirname, '..', 'frontend', 'dist')));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "..", "frontend", "dist", "index.html"));
+  });
+  
 // start server
 app.listen(port, () => {
     console.log(`HomeQuest service running on port ${port}`);
