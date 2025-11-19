@@ -141,7 +141,13 @@ for (const email in users) {
   
   
   app.use(express.static('public'));
-  
+
+  // ensures any route loads frontend app
+  app.get('*', (req, res) => {
+      res.sendFile('index.html', { root: 'public' });
+  });
+
+
 // start server
 app.listen(port, () => {
     console.log(`HomeQuest service running on port ${port}`);
