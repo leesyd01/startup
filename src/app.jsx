@@ -24,6 +24,7 @@ export default function App() {
             <div className="navbar-brand">HomeQuest<sup>&reg;</sup></div>
             <menu className="navbar-nav d-flex flex-row gap-3">
               <li className="nav-item"><NavLink className="nav-link" to="/">Login</NavLink></li>
+              <li className="nav-item"><NavLink className="nav-link" to="/register">Register</NavLink></li>
               <li className="nav-item"><NavLink className="nav-link" to="homepage">Home Page</NavLink></li>
               <li className="nav-item"><NavLink className="nav-link" to="saved">Saved</NavLink></li>
               <li className="nav-item"><NavLink className="nav-link" to="about">About Us</NavLink></li>
@@ -63,6 +64,13 @@ export default function App() {
           <About />
         </ProtectedRoute>
       }
+    />
+
+    <Route 
+      path="/register" 
+      element={
+        <Register onRegister={setUserName} 
+      />} 
     />
 
     {/* Catch-all route */}
