@@ -39,6 +39,7 @@ export default function App() {
   <Routes>
     {/* Public route */}
     <Route path="/" element={<Login onLogin={setUserName} />} />
+    <Route path="/register" element={<Register onRegister={setUserName} />} />
 
     {/* Protected routes */}
     <Route
@@ -66,15 +67,6 @@ export default function App() {
           <About />
         </ProtectedRoute>
       }
-    />
-
-    <Route 
-      path="/register" 
-      element={
-        <ProtectedRoute>
-          <Register onRegister={setUserName} />
-        </ProtectedRoute>
-      } 
     />
 
     {/* Catch-all route */}
