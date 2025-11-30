@@ -3,10 +3,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './app.css';
 import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom';
 import { Login } from './login/login';
+import { Register } from './register/register';
 import { Homepage } from './homepage/homepage';
 import { Saved } from './saved/saved';
 import { About } from './about/about';
 import { Navigate } from 'react-router-dom';
+
 
 function ProtectedRoute({ children }) {
   const user = localStorage.getItem('user');
