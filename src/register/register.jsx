@@ -41,36 +41,14 @@ function Register({ onRegister }) {
   };
 
   return (
-    <div className="register-container">
+    <div>
       <h2>Register</h2>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          value={formData.username}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
+        <input name="username" value={formData.username} onChange={handleChange} placeholder="Username" />
+        <input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Email" />
+        <input name="password" type="password" value={formData.password} onChange={handleChange} placeholder="Password" />
         <button type="submit">Register</button>
       </form>
-      {error && <p className="error">{error}</p>}
     </div>
   );
 }
