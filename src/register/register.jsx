@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function Register({ onRegister }) {
+export function Register({ onRegister }) {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -21,7 +21,6 @@ function Register({ onRegister }) {
     setError(null);
 
     try {
-      // Example: POST to your backend API
       const response = await fetch("/api/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -52,5 +51,3 @@ function Register({ onRegister }) {
     </div>
   );
 }
-
-export default Register;
