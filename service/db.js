@@ -1,19 +1,16 @@
 // database logic
-const { MongoClient } = require("mongodb");
-const config = require("../dbConfig.json");
+import { MongoClient } from "mongodb";
 
-const url = `mongodb+srv://${config.userName}:${config.password}@${config.hostname}`;
-const client = new MongoClient(url);
+const uri = process.env.MONGO_URL || "mongodb://localhost:27017";
+const client = new MongoClient(uri);
 
 let db;
 
-async function connectToDatabase() {
-  if (!db) {
-    await client.connect();
-    db = client.db("rental");
-    console.log("Connected to MongoDB");
-  }
-  return db;
+export async function connectToDatabase() {
+    if (!db) {
+        await client.connect();
+        db = client.db("homequest");
+        console.log("Connected to MongoDB");
+    }
+    return db;
 }
-
-module.exports = { connectToDatabase };

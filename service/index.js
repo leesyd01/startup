@@ -8,7 +8,9 @@ import cookieParser from 'cookie-parser';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 
-import { connectToDatabase } from './db.js';
+const { connectToDatabase } = './db.js';
+
+
 
 const app = express();
 
@@ -78,19 +80,6 @@ app.post('/api/login', async (req, res) => {
   res.cookie('token', token, { httpOnly: true });
   res.json({ msg: 'Login successful' });
 });
-
-
-    // password verification
-    const isValid = await bcrypt.compare(password, user.passwordHash);
-    if (!isValid) {
-        return res.status(401).json({ msg: 'Invalid password' });
-    }
-
-    // token generation and set cookie
-    const token = uuidv4();
-    user.token = token;
-    res.cookie('token', token, { httpOnly: true });
-    res.json({ msg: 'Login successful' });
 
 // user logout
 app.post('/api/logout', async (req, res) => {
