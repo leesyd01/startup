@@ -10,3 +10,4 @@ build/
 
 # Environment files
 .env
+dbConfig.json

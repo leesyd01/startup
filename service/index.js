@@ -1,3 +1,5 @@
+// server logic
+
 // backend service. path is startup/service/index.js - run using node index.js
 
 import cors from 'cors';
@@ -5,6 +7,8 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
+
+import { connectToDatabase } from './db.js';
 
 const app = express();
 
@@ -19,39 +23,62 @@ app.use(cookieParser());
 
 const users = {};
 
-// // DEV: seed a test user (email: test@example.com, password: password123)
-// import bcrypt from 'bcryptjs';
-// (async () => {
-//   const pw = await bcrypt.hash('password123', 10);
-//   users['test@example.com'] = { passwordHash: pw, favorites: [] };
-// })();
-
-
 // authentication endpoints
 
 // user registration
 app.post('/api/register', async (req, res) => {
-    const { email, password } = req.body;
-    
-    if (!email || !password) {
-        return res.status(400).json({ msg: 'Email and password required' });
-    }
-    if (users[email]) {
-        return res.status(409).json({ msg: 'User already exists' });
-    }
-    const passwordHash = await bcrypt.hash(password, 10);
-    users[email] = { passwordHash };
-    res.status(200).json({ msg: 'Registered successfully' });
+  const db = await connectToDatabase();
+  const users = db.collection("users");
+
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+      return res.status(400).json({ msg: 'Email and password required' });
+  }
+
+  const existing = await users.findOne({ email });
+  if (existing) {
+      return res.status(409).json({ msg: 'User already exists' });
+  }
+
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  await users.insertOne({
+      email,
+      passwordHash,
+      token: null,
+      favorites: []
+  });
+
+  res.status(200).json({ msg: 'Registered successfully' });
 });
+
 
 // user login
 app.post('/api/login', async (req, res) => {
-    const { email, password } = req.body;
-    const user = users[email];
+  const db = await connectToDatabase();
+  const users = db.collection("users");
 
-    if (!user) {
-        return res.status(404).json({ msg: 'User not found' });
-    }
+  const { email, password } = req.body;
+
+  const user = await users.findOne({ email });
+  if (!user) {
+      return res.status(404).json({ msg: 'User not found' });
+  }
+
+  const isValid = await bcrypt.compare(password, user.passwordHash);
+  if (!isValid) {
+      return res.status(401).json({ msg: 'Invalid password' });
+  }
+
+  const token = uuidv4();
+
+  await users.updateOne({ email }, { $set: { token } });
+
+  res.cookie('token', token, { httpOnly: true });
+  res.json({ msg: 'Login successful' });
+});
+
 
     // password verification
     const isValid = await bcrypt.compare(password, user.passwordHash);
@@ -64,19 +91,23 @@ app.post('/api/login', async (req, res) => {
     user.token = token;
     res.cookie('token', token, { httpOnly: true });
     res.json({ msg: 'Login successful' });
-});
 
 // user logout
-app.post('/api/logout', (req, res) => {
-    const token = req.cookies.token;
-    for (const email in users) {
-        if (users[email].token === token) {
-            delete users[email].token;
-        }
-    }
-    res.clearCookie('token');
-    res.json({ msg: 'Logged out' });
+app.post('/api/logout', async (req, res) => {
+  const db = await connectToDatabase();
+  const users = db.collection("users");
+
+  const token = req.cookies.token;
+
+  await users.updateOne(
+      { token },
+      { $set: { token: null } }
+  );
+
+  res.clearCookie('token');
+  res.json({ msg: 'Logged out' });
 });
+
 
 // endpoint: property listings
 app.get('/api/listings', (req, res) => {
@@ -94,49 +125,68 @@ for (const email in users) {
   }
   
   // get favorites (must be logged in)
-  app.get('/api/favorites', (req, res) => {
+  app.get('/api/favorites', async (req, res) => {
+    const db = await connectToDatabase();
+    const users = db.collection("users");
+
     const token = req.cookies.token;
-    const userEntry = Object.entries(users).find(([email, u]) => u.token === token);
-    if (!userEntry) return res.status(401).json({ msg: 'Unauthorized' });
-  
-    const [email, user] = userEntry;
+
+    const user = await users.findOne({ token });
+    if (!user) return res.status(401).json({ msg: 'Unauthorized' });
+
     res.json(user.favorites || []);
-  });
+});
+
   
   // add/remove favorite
-  app.post('/api/favorites', (req, res) => {
+  app.post('/api/favorites', async (req, res) => {
+    const db = await connectToDatabase();
+    const users = db.collection("users");
+
     const token = req.cookies.token;
-    const userEntry = Object.entries(users).find(([email, u]) => u.token === token);
-    if (!userEntry) return res.status(401).json({ msg: 'Unauthorized' });
-  
-    const [email, user] = userEntry;
     const home = req.body;
-  
+
     if (!home || !home.id) {
-      return res.status(400).json({ msg: 'Invalid home data' });
+        return res.status(400).json({ msg: 'Invalid home data' });
     }
-  
+
+    const user = await users.findOne({ token });
+    if (!user) return res.status(401).json({ msg: 'Unauthorized' });
+
     const exists = user.favorites?.find(h => h.id === home.id);
+
     if (exists) {
-      user.favorites = user.favorites.filter(h => h.id !== home.id);
+        // remove
+        await users.updateOne(
+            { token },
+            { $pull: { favorites: { id: home.id } } }
+        );
     } else {
-      user.favorites = [...(user.favorites || []), home];
+        // add
+        await users.updateOne(
+            { token },
+            { $push: { favorites: home } }
+        );
     }
-  
-    res.json(user.favorites);
-  });
+
+    const updatedUser = await users.findOne({ token });
+    res.json(updatedUser.favorites);
+});
+
 
   // login status check endpoint
-  app.get('/api/status', (req, res) => {
+  app.get('/api/status', async (req, res) => {
+    const db = await connectToDatabase();
+    const users = db.collection("users");
+
     const token = req.cookies.token;
-    const userEntry = Object.entries(users).find(([_, u]) => u.token === token);
-    if (!userEntry) return res.json({ loggedIn: false });
-    const [email] = userEntry;
-    res.json({ loggedIn: true, email });
-  });
-  
-  
-  app.use(express.static('public'));
+
+    const user = await users.findOne({ token });
+    if (!user) return res.json({ loggedIn: false });
+
+    res.json({ loggedIn: true, email: user.email });
+});
+
   
 // start server
 app.listen(port, () => {
