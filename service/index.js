@@ -8,7 +8,7 @@ import cookieParser from 'cookie-parser';
 import bcrypt from 'bcryptjs';
 import { v4 as uuidv4 } from 'uuid';
 
-const { connectToDatabase } = './db.js';
+import { connectToDatabase } from './db.js';
 
 
 
@@ -17,7 +17,7 @@ const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(cors({
-    origin: ['http://localhost5173', 'https://homequest.click'],
+    origin: ['http://localhost:5173', 'https://homequest.click'],
     credentials: true,
 }));
 app.use(express.json());
