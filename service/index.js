@@ -23,8 +23,6 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 
-const users = {};
-
 // authentication endpoints
 
 // user registration
@@ -107,11 +105,12 @@ app.get('/api/listings', (req, res) => {
     ];
     res.json(listings);
 });
-
+ 
+// const users = {}
 // endpoint: user favorites (login required)
-for (const email in users) {
-    if (!users[email].favorites) users[email].favorites = [];
-  }
+// for (const email in users) {
+//     if (!users[email].favorites) users[email].favorites = [];
+//   }
   
   // get favorites (must be logged in)
   app.get('/api/favorites', async (req, res) => {
