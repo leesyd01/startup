@@ -73,12 +73,6 @@ Zillow listings: (https://hasdata.com/apis/zillow-api?utm_source=google&utm_medi
 Zillow reviews: (https://www.zillowgroup.com/developers/api/agents/agent-reviews/)
 Crime: (https://rapidapi.com/collection/crime)
 
-To test login on localhost from project root:
-curl -i -X POST http://localhost:4000/api/register \
--H "Content-Type: application/json" \
--d '{"email":"test@example.com","password":"mypassword"}'
-
-if it returns "Registered successfully" then you can use those credentials to login
 
 
 
