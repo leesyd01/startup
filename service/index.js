@@ -10,6 +10,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { connectToDatabase } from './db.js';
 
+import WebSocket, { WebSocketServer } from 'ws';
+import http from 'http';   // <-- added
+
 
 
 const app = express();
@@ -106,14 +109,8 @@ app.get('/api/listings', (req, res) => {
     res.json(listings);
 });
  
-// const users = {}
-// endpoint: user favorites (login required)
-// for (const email in users) {
-//     if (!users[email].favorites) users[email].favorites = [];
-//   }
-  
-  // get favorites (must be logged in)
-  app.get('/api/favorites', async (req, res) => {
+// get favorites
+app.get('/api/favorites', async (req, res) => {
     const db = await connectToDatabase();
     const users = db.collection("users");
 
@@ -126,8 +123,8 @@ app.get('/api/listings', (req, res) => {
 });
 
   
-  // add/remove favorite
-  app.post('/api/favorites', async (req, res) => {
+// add/remove favorite
+app.post('/api/favorites', async (req, res) => {
     const db = await connectToDatabase();
     const users = db.collection("users");
 
@@ -162,8 +159,8 @@ app.get('/api/listings', (req, res) => {
 });
 
 
-  // login status check endpoint
-  app.get('/api/status', async (req, res) => {
+// login status check endpoint
+app.get('/api/status', async (req, res) => {
     const db = await connectToDatabase();
     const users = db.collection("users");
 
@@ -175,8 +172,48 @@ app.get('/api/listings', (req, res) => {
     res.json({ loggedIn: true, email: user.email });
 });
 
-  
-// start server
-app.listen(port, () => {
-    console.log(`HomeQuest service running on port ${port}`);
+
+
+// ---------------------------------------------------------------------------
+// 🚀 WEBSOCKET SERVER INSERTED HERE — minimal changes, required only
+// ---------------------------------------------------------------------------
+
+// Create HTTP server instead of app.listen()
+const server = http.createServer(app);
+
+// Create WebSocket server
+const wss = new WebSocketServer({ noServer: true });
+
+// Handle upgrade request for `/ws`
+server.on('upgrade', (request, socket, head) => {
+  if (request.url === '/ws') {
+    wss.handleUpgrade(request, socket, head, ws => {
+      wss.emit('connection', ws, request);
+    });
+  } else {
+    socket.destroy();
+  }
+});
+
+// WebSocket broadcast logic
+wss.on('connection', ws => {
+  console.log("WebSocket client connected");
+
+  ws.on('message', msg => {
+    console.log("Received:", msg.toString());
+
+    // broadcast to all connected clients
+    wss.clients.forEach(client => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(msg.toString());
+      }
+    });
+  });
+
+  ws.on('close', () => console.log("WebSocket client disconnected"));
+});
+
+// Start HTTP + WebSocket server
+server.listen(port, () => {
+  console.log(`HomeQuest service + WebSocket running on port ${port}`);
 });
