@@ -18,6 +18,40 @@ function ProtectedRoute({ children }) {
 export default function App() {
   const [userName, setUserName] = React.useState(localStorage.getItem('userName') || '');
 
+    // --- WebSocket implementation ---
+    const [wsMessages, setWsMessages] = React.useState([]);
+    const wsRef = React.useRef(null);
+  
+    React.useEffect(() => {
+      const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws';
+      const socketUrl = `${protocol}://${window.location.host}/ws`;
+      const socket = new WebSocket(socketUrl);
+      wsRef.current = socket;
+  
+      socket.onopen = () => {
+        console.log("WebSocket connected");
+      };
+  
+      socket.onmessage = (event) => {
+        console.log("WS message:", event.data);
+        setWsMessages(prev => [...prev, event.data]);
+      };
+  
+      socket.onclose = () => {
+        console.log("WebSocket disconnected");
+      };
+  
+      return () => socket.close();
+    }, []);
+  
+    // Function to send a test WS message
+    const sendWsMessage = () => {
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        wsRef.current.send("Hello from HomeQuest frontend!");
+      }
+    };
+  
+
   return (
     <BrowserRouter>
       <div className="body bg-light text-dark min-vh-100 d-flex flex-column">
@@ -83,6 +117,20 @@ export default function App() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </main> */}
+                {/* WebSocket Test UI */}
+                <div className="container my-4 p-3 border rounded">
+          <h5>WebSocket Test</h5>
+
+          <button className="btn btn-secondary mb-3" onClick={sendWsMessage}>
+            Send Test Message
+          </button>
+
+          <div id="messages" style={{ maxHeight: '150px', overflowY: 'auto' }}>
+            {wsMessages.map((m, i) => (
+              <div key={i}>{m}</div>
+            ))}
+          </div>
+        </div>
 
         <footer className="bg-secondary text-white-50 mt-auto py-3">
           <div className="container-fluid text-center">
