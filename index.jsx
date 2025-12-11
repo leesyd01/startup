@@ -4,3 +4,58 @@ import App from './src/app';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<App />);
+
+function Chat({ webSocket }) {
+    const [name, setName] = React.useState('');
+  
+    return (
+      <main>
+        <Name updateName={setName} />
+        <Message name={name} webSocket={webSocket} />
+        <Conversation webSocket={webSocket} />
+      </main>
+    );
+  }
+
+  function Name({ updateName }) {
+    return (
+      <main>
+        <div className='name'>
+          <fieldset id='name-controls'>
+            <legend>My Name</legend>
+            <input onChange={(e) => updateName(e.target.value)} id='my-name' type='text' />
+          </fieldset>
+        </div>
+      </main>
+    );
+  }
+
+  function Message({ name, webSocket }) {
+    const [message, setMessage] = React.useState('');
+  
+    function doneMessage(e) {
+      if (e.key === 'Enter') {
+        sendMsg();
+      }
+    }
+  
+    function sendMsg() {
+      webSocket.sendMessage(name, message);
+      setMessage('');
+    }
+  
+    const disabled = name === '' || !webSocket.connected;
+    return (
+      <main>
+        <fieldset id='chat-controls'>
+          <legend>Chat</legend>
+          <input disabled={disabled} onKeyDown={(e) => doneMessage(e)} value={message} onChange={(e) => setMessage(e.target.value)} type='text' />
+          <button disabled={disabled || !message} onClick={sendMsg}>
+            Send
+          </button>
+        </fieldset>
+      </main>
+    );
+  }
+
+  
