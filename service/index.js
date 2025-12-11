@@ -20,7 +20,7 @@ const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://homequest.click', 'https://startup.homequest.click'],
+    origin: ['http://localhost:5173', 'https://homequest.click', 'https://homequest.click'],
     credentials: true,
 }));
 app.use(express.json());
@@ -78,7 +78,7 @@ app.post('/api/login', async (req, res) => {
 
   await users.updateOne({ email }, { $set: { token } });
 
-  res.cookie('token', token, { httpOnly: true, secure: true, sameSite: "none" });
+  res.cookie('token', token, { httpOnly: true, secure: true });
   res.json({ msg: 'Login successful' });
 });
 
