@@ -7,6 +7,7 @@ export function Saved() {
     async function loadFavorites() {
       try {
         const res = await fetch('/api/favorites', {
+          method: 'GET',
           credentials: 'include'
         });
 
