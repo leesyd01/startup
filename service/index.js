@@ -20,7 +20,7 @@ const app = express();
 const port = process.argv.length > 2 ? process.argv[2] : 4000;
 
 app.use(cors({
-    origin: ['http://localhost:5173', 'https://homequest.click', 'https://homequest.click'],
+    origin: ['http://localhost:5173', 'https://homequest.click', 'https://startup.homequest.click'],
     credentials: true,
 }));
 app.use(express.json());
