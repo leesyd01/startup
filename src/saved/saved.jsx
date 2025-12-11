@@ -4,12 +4,30 @@ export function Saved() {
   const [savedHomes, setSavedHomes] = React.useState([]);
 
   React.useEffect(() => {
-    const homes = JSON.parse(localStorage.getItem('savedHomes')) || [];
-    setSavedHomes(homes);
+    async function loadFavorites() {
+      try {
+        const res = await fetch('/api/favorites', {
+          credentials: 'include'
+        });
+
+        if (!res.ok) {
+          console.error("Failed to load favorites");
+          return;
+        }
+
+        const data = await res.json();
+        setSavedHomes(data);
+      } catch (err) {
+        console.error("Error fetching favorites:", err);
+      }
+    }
+
+    loadFavorites();
   }, []);
 
-  function clearSaved() {
-    localStorage.removeItem('savedHomes');
+  async function clearSaved() {
+    // Optional: clear all favorites in DB
+    // For now, just clear UI
     setSavedHomes([]);
   }
 
@@ -21,11 +39,15 @@ export function Saved() {
       ) : (
         <ul className="list-group">
           {savedHomes.map((home, i) => (
-            <li key={i} className="list-group-item">{home.title} - ${home.price.toLocaleString()}</li>
+            <li key={i} className="list-group-item">
+              {home.title} - ${home.price.toLocaleString()}
+            </li>
           ))}
         </ul>
       )}
-      <button className="btn btn-danger mt-3" onClick={clearSaved}>Clear Saved Homes</button>
+      <button className="btn btn-danger mt-3" onClick={clearSaved}>
+        Clear Saved Homes
+      </button>
     </div>
   );
 }
