@@ -244,3 +244,88 @@ banana.fruit.bozo.click	Sub-subdomain
 - If delayed: new Promise(r => setTimeout(() => r("ok"), 1000))
                   .then(console.log);
 - After 1 second: "ok"
+
+
+FINAL REVIEW QUESTIONS
+
+Pick the best answer to each question.
+
+2. What is the default port for HTTP/HTTPS/SSH? 
+- HTTP: 80
+- HTTPS: 443
+- SSH: 22
+
+3. What does an HTTP status code in the range of 300/400/500 indicate?
+- 300s: Redirection (must take additional action)
+- 400s: Client errors (bad request, unauthorized, not found)
+- 500s: Server errors (server failed to handle request)
+
+4. What does the HTTP header content-type allow you to do?
+- Tells client what type of data is being sent (json, html, plain text) so it knows how to parse it
+
+5. What does a “Secure cookie”/”Http-only cookie”/”Same-site cookie” do? https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies
+- secure cookie: only sent over https
+- httponly cookie: cannot be accessed via javascript (protects against xss)
+- samesite cookie: controls whether cookies are sent with cross-site requests
+
+6. Assuming the following Express middleware, what would be the console.log output for an HTTP GET request with a URL path of /api/document?
+- 
+
+7. Given the following Express service code: What does the following front end JavaScript that performs a fetch return?
+- 
+
+8. Given the following MongoDB query, select all of the matching documents {name:Mark}
+- 
+
+9. How should user passwords be stored?
+- hashed, salted, using a string algorithm like bcrypt, argon2, or scrypt
+
+10. Assuming the following node.js websocket code in the back end, and the following front end websocket code, what will the front end log to the console?
+- 
+
+11. What is the websocket protocol intended to provide?
+- to provide full-duplex, persistent, real-time communication between a client and server over a single connection
+
+12. What do the following acronyms stand for? JSX, JS, AWS, NPM, NVM
+- jsx=javascript xml
+- js=javascript
+- aws=amazon web services
+- npm=node package manager
+- nvm=node version manager
+
+13. Assuming an HTML document with a body element. What text content will the following React component generate?  The react component will use parameters.
+- 
+
+14. Given a set of React components that include each other, what will be generated
+- 
+
+15. What does a React component with React.useState do?
+- allows a React component to store and update local state, causing the component to re-render when the state changes
+
+16. What are React Hooks used for?
+- they let you use state, handle side effects, access context, manage refs without writing class components
+
+17. What does the State Hook/Context Hook/Ref Hook/Effect Hook/Performance Hook do? https://react.dev/reference/react/hooks
+- useState: local component state
+- useContext: access global/shared state
+- useRef: persistent mutable values or DOM refs
+- useEffect: side effects (fetching, subscriptions)
+- useMemo, useCallback: optimize re-renders
+
+18. Given React Router code, select statements that are true.
+- 
+
+19. What does the package.json file do?
+- describes the project, lists dependencies, defines scripts, stores metadata (name, version, entry point)
+
+20. What does the fetch function do?
+- performs http requests from the browser or Node.js and returns a promise that resolves to a response
+
+21. What does node.js do?
+- allows js to run outside the browser for servers, apis, CLI tools
+
+22. What does pm2 do?
+- a process manager for node.js that keeps apps running, restarts on crashes, supports clustering, manages logs
+
+23. What does Vite do?
+- a modern frontend tool that provides fast dev server, optimized product builds, native ES module support
